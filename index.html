@@ -329,7 +329,6 @@
 
         // --- Game Logic ---
         function createCategoryButtons() {
-            // ... (โค้ดสร้างปุ่มหมวดหมู่เดิม)
             const categoryColors = {
                 "วันคริสต์มาส 🎄": { bg: "#2ECC71", shadow: "#27AE60" }, 
                 "วันวาเลนไทน์ ❤️": { bg: "#E74C3C", shadow: "#C0392B" }, 
@@ -359,8 +358,12 @@
 
         function startLesson(category) {
             currentCategoryVocabs = vocabularyData[category];
-            // แก้ไขข้อ 3: ลบไอคอนออกจากชื่อหัวข้อในหน้าบทเรียน
-            lessonTitle.textContent = category.replace(/ [🎄❤️💦🎃]/, ''); 
+            
+            // ************ แก้ไขข้อ 3: ใช้ RegEx เพื่อลบอิโมจิและช่องว่างที่อยู่ข้างหน้า/ข้างหลังออกให้หมด ************
+            // \p{Emoji_Presentation}U เป็น Regular Expression สำหรับการค้นหาสัญลักษณ์ Emoji
+            const titleWithoutEmoji = category.replace(/\s*[\uD800-\uDBFF\uDC00-\uDFFF\u2700-\u27BF\u2300-\u23FF\u2B00-\u2BFF\u2E80-\u33FF]\s*/g, '').trim();
+
+            lessonTitle.textContent = titleWithoutEmoji; 
             currentIndex = 0;
             displayVocab();
             categoryPage.style.display = 'none';
@@ -371,15 +374,12 @@
         function displayVocab() {
             if (currentIndex < currentCategoryVocabs.length) {
                 currentVocab = currentCategoryVocabs[currentIndex];
-                // แก้ไขข้อ 4: สลับการแสดงผล
+                // English ขึ้นก่อน Thai
                 englishWord.textContent = currentVocab.english;
                 thaiWord.textContent = currentVocab.thai;
                 
-                // แก้ไขข้อ 1: ลบคำสั่ง speakText() ออกจากการแสดงผลปกติ (ไม่เล่นเองอัตโนมัติ)
-                // if (!isPlaying) { speakText(currentVocab.english, 'en-US'); } 
-
             } else {
-                // แก้ไขข้อ 2: แสดงข้อความจบและหยุดเล่น
+                // แสดงข้อความจบและหยุดเล่น
                 englishWord.textContent = "Finished! 🥳";
                 thaiWord.textContent = "จบแล้ว! 🎉 แล้วเจอกันใหม่นะ";
                 stopAutoPlay();
@@ -424,7 +424,7 @@
 
         function playCurrentVocabAuto() {
             if (currentIndex >= currentCategoryVocabs.length) {
-                // แก้ไขข้อ 2: หยุดการเล่นและแสดงข้อความจบ
+                // หยุดการเล่นและแสดงข้อความจบ
                 stopAutoPlay();
                 displayVocab(); // แสดงข้อความ "จบแล้ว"
                 return;
