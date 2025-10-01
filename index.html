@@ -61,7 +61,6 @@
             margin-top: 1.5rem;
         }
         .category-button {
-            background-color: var(--color-secondary);
             color: var(--text-color);
             border: none;
             padding: 1.5rem;
@@ -74,7 +73,7 @@
             text-transform: uppercase;
             font-family: 'Mali', cursive;
         }
-        .category-button:hover { transform: translateY(-5px); box-shadow: 0 10px 0 rgba(0, 0, 0, 0.4); background-color: #6DFFE7; }
+        /* สี hover ถูกจัดการใน JS ตาม category-button:hover ที่ตั้งไว้ */
         .category-button:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4); }
 
         /* Lesson Page */
@@ -129,13 +128,13 @@
         .control-group button:disabled { background-color: #ccc; cursor: not-allowed; box-shadow: none; }
 
         /* สีปุ่มควบคุม */
-        .audio-btn { background-color: #1ABC9C; box-shadow: 0 4px 0 #16A085; } /* Turquoise Green */
+        .audio-btn { background-color: #1ABC9C; box-shadow: 4px 0 #16A085; } /* Turquoise Green */
         .audio-btn:hover { background-color: #16A085; }
-        .nav-btn { background-color: #F39C12; box-shadow: 0 4px 0 #E67E22; } /* Orange */
+        .nav-btn { background-color: #F39C12; box-shadow: 4px 0 #E67E22; } /* Orange */
         .nav-btn:hover { background-color: #E67E22; }
-        .play-btn { background-color: #3498DB; box-shadow: 0 4px 0 #2980B9; } /* Blue */
+        .play-btn { background-color: #3498DB; box-shadow: 4px 0 #2980B9; } /* Blue */
         .play-btn:hover { background-color: #2980B9; }
-        .back-btn { background-color: #9B59B6; box-shadow: 0 4px 0 #8E44AD; } /* Amethyst Purple */
+        .back-btn { background-color: #9B59B6; box-shadow: 4px 0 #8E44AD; } /* Amethyst Purple */
         .back-btn:hover { background-color: #8E44AD; }
     </style>
 </head>
@@ -172,6 +171,50 @@
 
     <script>
         const vocabularyData = {
+            "เทศกาลลอยกระทง 🌕": [
+                { thai: "ลอยกระทง", english: "Loy Krathong" },
+                { thai: "กระทง", english: "krathong (float)" },
+                { thai: "พระจันทร์เต็มดวง", english: "full moon" },
+                { thai: "แม่น้ำ", english: "river" },
+                { thai: "ดอกบัว", english: "lotus" },
+                { thai: "เทียน", english: "candle" },
+                { thai: "ธูป", english: "incense stick" },
+                { thai: "ดอกไม้", english: "flowers" },
+                { thai: "กล้วย", english: "banana tree" },
+                { thai: "ใบตอง", english: "banana leaf" },
+                { thai: "การขอขมา", english: "asking for forgiveness" },
+                { thai: "การลอย", english: "to float" },
+                { thai: "ความเชื่อ", english: "belief" },
+                { thai: "พิธี", english: "ceremony" },
+                { thai: "ประเพณี", english: "tradition" },
+                { thai: "โคมลอย", english: "sky lantern (khom loi)" },
+                { thai: "พลุ/ดอกไม้ไฟ", english: "fireworks" },
+                { thai: "ดวงจันทร์", english: "moon" },
+                { thai: "แสงสว่าง", english: "light" },
+                { thai: "ศาลเจ้าแม่คงคา", english: "Goddess of Water Shrine" }
+            ],
+            "เทศกาลอีสเตอร์ 🥚": [
+                { thai: "อีสเตอร์", english: "Easter" },
+                { thai: "ไข่อีสเตอร์", english: "Easter Egg" },
+                { thai: "กระต่ายอีสเตอร์", english: "Easter Bunny" },
+                { thai: "ช็อกโกแลต", english: "chocolate" },
+                { thai: "ฤดูใบไม้ผลิ", english: "spring" },
+                { thai: "ตะกร้า", english: "basket" },
+                { thai: "การค้นหา", english: "hunt" },
+                { thai: "ไม้กางเขน", english: "cross" },
+                { thai: "โบสถ์", english: "church" },
+                { thai: "การฟื้นคืนชีพ", english: "resurrection" },
+                { thai: "วันศุกร์ประเสริฐ", english: "Good Friday" },
+                { thai: "วันอาทิตย์ใบลาน", english: "Palm Sunday" },
+                { thai: "ลูกแกะ", english: "lamb" },
+                { thai: "ลูกไก่", english: "chick" },
+                { thai: "ขนมหวาน", english: "candy" },
+                { thai: "เจลลี่บีน", english: "Jelly Bean" },
+                { thai: "ย้อมสี", english: "dye (verb)" },
+                { thai: "หมวกบอนเน็ต", english: "bonnet" },
+                { thai: "ขบวนพาเหรด", english: "parade" },
+                { thai: "การเฉลิมฉลอง", english: "celebration" }
+            ],
             "เทศกาลปีใหม่ 🎉": [
                 { thai: "ปีใหม่", english: "New Year" }, 
                 { thai: "วันส่งท้ายปีเก่า", english: "New Year's Eve" }, 
@@ -189,7 +232,7 @@
                 { thai: "ปาร์ตี้", english: "party" }, 
                 { thai: "สวัสดีปีใหม่", english: "Happy New Year" }, 
                 { thai: "จิบ/ดื่ม", english: "toasting" }, 
-                { thai: "พรปีใหม่", english: "New Year's wishes" }, // แก้ไขจาก แชมเปญ
+                { thai: "พรปีใหม่", english: "New Year's wishes" }, 
                 { thai: "ปีที่กำลังจะมา", english: "coming year" }, 
                 { thai: "เพลงประจำเทศกาล", english: "holiday song" }, 
                 { thai: "ของตกแต่ง", english: "decorations" }
@@ -352,6 +395,8 @@
         // --- Game Logic ---
         function createCategoryButtons() {
             const categoryColors = {
+                "เทศกาลลอยกระทง 🌕": { bg: "#74B9FF", shadow: "#0984E3" }, // Light Blue/Indigo for Loy Krathong
+                "เทศกาลอีสเตอร์ 🥚": { bg: "#A29BFE", shadow: "#6C5CE7" }, // Light Violet/Purple for Easter
                 "เทศกาลปีใหม่ 🎉": { bg: "#3498DB", shadow: "#2980B9" }, // Blue
                 "วันคริสต์มาส 🎄": { bg: "#2ECC71", shadow: "#27AE60" }, // Emerald Green
                 "วันวาเลนไทน์ ❤️": { bg: "#E74C3C", shadow: "#C0392B" }, // Alizarin Red
