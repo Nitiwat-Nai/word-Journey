@@ -8,11 +8,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&family=Mali:wght@600&display=swap');
 
-        /* สีสันใหม่ที่สดใสและมีธีม */
+        /* สีสันหลักสำหรับ UI ที่ไม่ใช่บัตรคำศัพท์ (Card) */
         :root {
-            --color-primary: #FF6B6B; /* Coral Red - หัวใจ/รัก */
-            --color-secondary: #4ECDC4; /* Light Teal - สดชื่น/สงบ */
-            --color-accent: #FFE66D; /* Sunny Yellow - สดใส/วันหยุด */
+            --color-red: #FF6B6B; /* Coral Red - ใช้สำหรับ Title และ Border */
             --color-background-start: #A29BFE; /* Light Purple */
             --color-background-end: #FDCB6E; /* Orange-Yellow */
             --text-color: #2c3e50; /* Dark Blue Gray */
@@ -24,7 +22,7 @@
             background: linear-gradient(135deg, var(--color-background-start), var(--color-background-end));
             color: var(--text-color);
             margin: 0;
-            padding: 1rem; /* ลด Padding สำหรับมือถือ */
+            padding: 1rem; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,22 +32,25 @@
 
         .container {
             background-color: var(--card-color);
-            padding: 1.5rem; /* ลด Padding สำหรับมือถือ */
+            padding: 1.5rem; 
             border-radius: 30px; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
             width: 100%;
-            max-width: 600px; /* จำกัดความกว้างสูงสุดให้เหมาะสมกับมือถือ */
+            max-width: 600px; 
             box-sizing: border-box;
-            border: 5px solid var(--color-primary); 
+            border: 5px solid var(--color-red); /* ใช้สีหลักเดิมเป็นสีขอบ */
         }
 
         h1 {
-            color: var(--color-primary);
+            color: var(--color-red);
             font-family: 'Mali', cursive;
-            font-size: 2.5em; /* ลดขนาด H1 สำหรับมือถือ */
+            font-size: 2.5em; 
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
             line-height: 1.2;
+        }
+        h1.lesson-title {
+            color: var(--text-color); /* ไม่ใช้สีแดง เพื่อให้สีหัวข้อไม่ชนกับสีการ์ด */
         }
 
         /* ----------------------- */
@@ -58,17 +59,16 @@
         #category-page { display: block; }
         .category-grid {
             display: grid;
-            /* เน้นการแสดงผล 1 คอลัมน์บนจอเล็ก และเป็น 2 คอลัมน์บนจอใหญ่ขึ้น */
             grid-template-columns: 1fr; 
             gap: 1rem;
             margin-top: 1.5rem;
         }
         .category-button {
-            color: var(--text-color);
+            color: white; /* เปลี่ยนเป็นสีขาวเพื่อให้เข้ากับธีมสีปุ่ม */
             border: none;
-            padding: 1.8rem 1rem; /* เพิ่ม Padding ให้กดง่ายขึ้น */
+            padding: 1.8rem 1rem; 
             border-radius: 20px;
-            font-size: 1.4em; /* เพิ่มขนาดฟอนต์ปุ่ม */
+            font-size: 1.4em; 
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 6px 0 rgba(0, 0, 0, 0.4); 
@@ -76,35 +76,36 @@
             text-transform: uppercase;
             font-family: 'Mali', cursive;
         }
-        .category-button:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4); }
+        .category-button:hover { transform: translateY(-3px); }
+        .category-button:active { transform: translateY(1px) !important; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4) !important; }
 
         /* ----------------------- */
         /* Lesson Page (Mobile)    */
         /* ----------------------- */
         #lesson-page { display: none; }
         #vocab-card {
-            background-color: var(--color-primary); 
+            /* สีพื้นหลังและขอบจะถูกกำหนดผ่าน Inline Style ใน JS (cardPrimary & cardAccent) */
             border-radius: 25px;
-            padding: 2.5rem 1.5rem; /* ลด Padding การ์ดเล็กน้อย */
+            padding: 2.5rem 1.5rem; 
             min-height: 250px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            border: 4px solid var(--color-accent); 
             margin-bottom: 1.5rem;
+            transition: background-color 0.5s, border-color 0.5s;
         }
-        /* English ขึ้นก่อน Thai - ฟอนต์ใหญ่มากเพื่อเน้น */
+        /* English ขึ้นก่อน Thai */
         #english-word {
-            font-size: 3.5em; /* ปรับขนาดให้ใหญ่ขึ้นแต่ยังคงอยู่ในบรรทัดเดียว */
-            color: var(--color-accent); /* สีเหลือง */
+            font-size: 3.5em; 
+            /* สีฟอนต์ถูกกำหนดผ่าน Inline Style ใน JS (cardAccent) */
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
             margin-bottom: 0.8rem;
             font-weight: 700;
         }
         #thai-word {
-            font-size: 2.5em; /* ปรับขนาดให้ใหญ่ขึ้น */
+            font-size: 2.5em; 
             color: var(--card-color); /* สีขาว */
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
             margin-bottom: 0;
@@ -113,17 +114,17 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.8rem; /* ลด Gap เล็กน้อย */
+            gap: 0.8rem; 
             margin-top: 1rem;
         }
         .control-group button {
-            flex-grow: 1; /* ให้ปุ่มขยายเต็มพื้นที่เมื่อมีน้อยกว่า 3 ปุ่มต่อแถว */
-            min-width: 100px; /* กำหนดความกว้างขั้นต่ำ */
+            flex-grow: 1; 
+            min-width: 100px; 
             color: white;
             border: none;
-            padding: 15px 15px; /* เพิ่ม Padding ให้กดง่าย */
+            padding: 15px 15px; 
             border-radius: 50px;
-            font-size: 1.2em; /* เพิ่มขนาดฟอนต์ปุ่มควบคุม */
+            font-size: 1.2em; 
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
@@ -142,7 +143,7 @@
                 font-size: 3.5em;
             }
             .category-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* กลับเป็น 2-3 คอลัมน์บนจอใหญ่ */
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
                 gap: 1.5rem;
             }
             .category-button {
@@ -181,7 +182,7 @@
         </div>
 
         <div id="lesson-page">
-            <h1 id="lesson-title" style="font-size: 2.5em;"></h1>
+            <h1 id="lesson-title" class="lesson-title" style="font-size: 2.5em;"></h1>
             <div id="vocab-card">
                 <span id="english-word" class="word">...</span>
                 <span id="thai-word" class="word">...</span>
@@ -204,8 +205,20 @@
     </div>
 
     <script>
+        // ข้อมูลธีมสีและไอคอน
+        const themeData = {
+            "เทศกาลลอยกระทง": { icon: "🛶", buttonBg: "#74B9FF", buttonShadow: "#0984E3", cardPrimary: "#3498DB", cardAccent: "#FFE66D" }, // Blue/Yellow
+            "เทศกาลอีสเตอร์": { icon: "🐰", buttonBg: "#A29BFE", buttonShadow: "#6C5CE7", cardPrimary: "#9B59B6", cardAccent: "#FDCB6E" }, // Purple/Orange
+            "เทศกาลปีใหม่": { icon: "🍾", buttonBg: "#3498DB", buttonShadow: "#2980B9", cardPrimary: "#FF6B6B", cardAccent: "#FFE66D" }, // Red/Yellow
+            "วันคริสต์มาส": { icon: "🎁", buttonBg: "#2ECC71", buttonShadow: "#27AE60", cardPrimary: "#2ECC71", cardAccent: "#E74C3C" }, // Green/Red
+            "วันวาเลนไทน์": { icon: "💘", buttonBg: "#E74C3C", buttonShadow: "#C0392B", cardPrimary: "#E74C3C", cardAccent: "#FFFFFF" }, // Red/White
+            "วันสงกรานต์": { icon: "🐘", buttonBg: "#1ABC9C", buttonShadow: "#16A085", cardPrimary: "#4ECDC4", cardAccent: "#FFE66D" }, // Teal/Yellow
+            "วันฮาโลวีน": { icon: "👻", buttonBg: "#F39C12", buttonShadow: "#D35400", cardPrimary: "#F39C12", cardAccent: "#9B59B6" } // Orange/Purple
+        };
+
+        // ข้อมูลคำศัพท์ (แก้ไขชื่อเทศกาลและคำทับศัพท์)
         const vocabularyData = {
-            "เทศกาลลอยกระทง 🌕": [
+            "เทศกาลลอยกระทง": [
                 { thai: "ลอยกระทง", english: "Loy Krathong" },
                 { thai: "กระทง", english: "krathong (float)" },
                 { thai: "พระจันทร์เต็มดวง", english: "full moon" },
@@ -214,7 +227,7 @@
                 { thai: "เทียน", english: "candle" },
                 { thai: "ธูป", english: "incense stick" },
                 { thai: "ดอกไม้", english: "flowers" },
-                { thai: "กล้วย", english: "banana tree" },
+                { thai: "ต้นกล้วย", english: "banana tree" },
                 { thai: "ใบตอง", english: "banana leaf" },
                 { thai: "การขอขมา", english: "asking for forgiveness" },
                 { thai: "การลอย", english: "to float" },
@@ -227,14 +240,14 @@
                 { thai: "แสงสว่าง", english: "light" },
                 { thai: "ศาลเจ้าแม่คงคา", english: "Goddess of Water Shrine" }
             ],
-            "เทศกาลอีสเตอร์ 🥚": [
+            "เทศกาลอีสเตอร์": [
                 { thai: "อีสเตอร์", english: "Easter" },
                 { thai: "ไข่อีสเตอร์", english: "Easter Egg" },
                 { thai: "กระต่ายอีสเตอร์", english: "Easter Bunny" },
                 { thai: "ช็อกโกแลต", english: "chocolate" },
                 { thai: "ฤดูใบไม้ผลิ", english: "spring" },
                 { thai: "ตะกร้า", english: "basket" },
-                { thai: "การค้นหา", english: "hunt" },
+                { thai: "การค้นหาไข่", english: "egg hunt" },
                 { thai: "ไม้กางเขน", english: "cross" },
                 { thai: "โบสถ์", english: "church" },
                 { thai: "การฟื้นคืนชีพ", english: "resurrection" },
@@ -249,7 +262,7 @@
                 { thai: "ขบวนพาเหรด", english: "parade" },
                 { thai: "การเฉลิมฉลอง", english: "celebration" }
             ],
-            "เทศกาลปีใหม่ 🎉": [
+            "เทศกาลปีใหม่": [
                 { thai: "ปีใหม่", english: "New Year" }, 
                 { thai: "วันส่งท้ายปีเก่า", english: "New Year's Eve" }, 
                 { thai: "การนับถอยหลัง", english: "countdown" }, 
@@ -265,13 +278,13 @@
                 { thai: "ปฏิทิน", english: "calendar" }, 
                 { thai: "ปาร์ตี้", english: "party" }, 
                 { thai: "สวัสดีปีใหม่", english: "Happy New Year" }, 
-                { thai: "จิบ/ดื่ม", english: "toasting" }, 
+                { thai: "ชนแก้ว", english: "toasting" }, 
                 { thai: "พรปีใหม่", english: "New Year's wishes" }, 
                 { thai: "ปีที่กำลังจะมา", english: "coming year" }, 
                 { thai: "เพลงประจำเทศกาล", english: "holiday song" }, 
                 { thai: "ของตกแต่ง", english: "decorations" }
             ],
-            "วันคริสต์มาส 🎄": [
+            "วันคริสต์มาส": [
                 { thai: "ซานตาคลอส", english: "Santa Claus" }, 
                 { thai: "กวางเรนเดียร์", english: "reindeer" }, 
                 { thai: "ของขวัญ", english: "gift/present" }, 
@@ -293,7 +306,7 @@
                 { thai: "ฮอลลี่", english: "holly" }, 
                 { thai: "เตาผิง", english: "fireplace" }
             ],
-            "วันวาเลนไทน์ ❤️": [
+            "วันวาเลนไทน์": [
                 { thai: "ความรัก", english: "love" }, 
                 { thai: "หัวใจ", english: "heart" }, 
                 { thai: "ช็อกโกแลต", english: "chocolate" }, 
@@ -315,7 +328,7 @@
                 { thai: "การออกเดท", english: "dating" },
                 { thai: "คู่ชีวิต", english: "partner" }
             ],
-            "วันสงกรานต์ 💦": [
+            "วันสงกรานต์": [
                 { thai: "ปีใหม่ไทย", english: "Thai New Year" }, 
                 { thai: "สรงน้ำพระ", english: "bathing rite (Buddha image)" }, 
                 { thai: "ก่อเจดีย์ทราย", english: "sand pagoda" }, 
@@ -337,9 +350,9 @@
                 { thai: "การเล่นน้ำ", english: "water fight" }, 
                 { thai: "วันมหาสงกรานต์", english: "Maha Songkran" }
             ],
-            "วันฮาโลวีน 🎃": [
+            "วันฮาโลวีน": [
                 { thai: "ฟักทอง", english: "Pumpkin" }, 
-                { thai: "แจ็คโอแลนเทิร์น", english: "Jack-o'-lantern" }, 
+                { thai: "ตะเกียงฟักทอง", english: "Jack-o'-lantern" }, /* แก้ไขจาก 'แจ็คโอแลนเทิร์น' */
                 { thai: "ชุดแฟนซี", english: "Costume" }, 
                 { thai: "หลอกหรือเลี้ยง", english: "Trick-or-treat" }, 
                 { thai: "ผี", english: "Ghost" }, 
@@ -367,6 +380,7 @@
         const lessonPage = document.getElementById('lesson-page');
         const categoryGrid = document.getElementById('category-grid');
         const lessonTitle = document.getElementById('lesson-title');
+        const vocabCard = document.getElementById('vocab-card');
         const thaiWord = document.getElementById('thai-word');
         const englishWord = document.getElementById('english-word');
         const playPauseBtn = document.getElementById('play-pause-btn');
@@ -428,30 +442,23 @@
 
         // --- Game Logic ---
         function createCategoryButtons() {
-            const categoryColors = {
-                "เทศกาลลอยกระทง 🌕": { bg: "#74B9FF", shadow: "#0984E3" }, // Light Blue/Indigo for Loy Krathong
-                "เทศกาลอีสเตอร์ 🥚": { bg: "#A29BFE", shadow: "#6C5CE7" }, // Light Violet/Purple for Easter
-                "เทศกาลปีใหม่ 🎉": { bg: "#3498DB", shadow: "#2980B9" }, // Blue
-                "วันคริสต์มาส 🎄": { bg: "#2ECC71", shadow: "#27AE60" }, // Emerald Green
-                "วันวาเลนไทน์ ❤️": { bg: "#E74C3C", shadow: "#C0392B" }, // Alizarin Red
-                "วันสงกรานต์ 💦": { bg: "#1ABC9C", shadow: "#16A085" }, // Turquoise Green
-                "วันฮาโลวีน 🎃": { bg: "#F39C12", shadow: "#D35400" } // Orange / Pumpkin
-            };
+            // ล้างปุ่มเก่าทั้งหมด
+            categoryGrid.innerHTML = ''; 
 
             for (const category in vocabularyData) {
+                const theme = themeData[category] || { icon: "✨", buttonBg: "#9B59B6", buttonShadow: "#8E44AD" };
                 const button = document.createElement('button');
                 button.className = 'category-button';
-                button.innerHTML = category;
+                // ใส่ไอคอนในชื่อหมวดหมู่
+                button.innerHTML = `${category} ${theme.icon}`; 
                 
-                const colors = categoryColors[category] || { bg: "#9B59B6", shadow: "#8E44AD" };
+                button.style.backgroundColor = theme.buttonBg;
+                button.style.boxShadow = `0 6px 0 ${theme.buttonShadow}`;
                 
-                button.style.backgroundColor = colors.bg;
-                button.style.boxShadow = `0 6px 0 ${colors.shadow}`;
-                
-                button.onmouseover = () => { button.style.backgroundColor = colors.shadow; button.style.transform = 'translateY(-3px)'; };
-                button.onmouseleave = () => { button.style.backgroundColor = colors.bg; button.style.transform = 'translateY(0)'; };
-                button.onmousedown = () => { button.style.transform = 'translateY(1px)'; button.style.boxShadow = `0 2px 0 ${colors.shadow}`; };
-
+                // อัปเดต Mouse events ให้ใช้สี Shadow สำหรับ Hover
+                button.onmouseover = () => { button.style.backgroundColor = theme.buttonShadow; button.style.transform = 'translateY(-3px)'; };
+                button.onmouseleave = () => { button.style.backgroundColor = theme.buttonBg; button.style.transform = 'translateY(0)'; };
+                // onmousedown จัดการใน CSS แล้ว
 
                 button.addEventListener('click', () => startLesson(category));
                 categoryGrid.appendChild(button);
@@ -460,11 +467,16 @@
 
         function startLesson(category) {
             currentCategoryVocabs = vocabularyData[category];
-            
-            // ใช้ RegEx เพื่อลบอิโมจิและช่องว่างที่อยู่ข้างหน้า/ข้างหลังออกให้หมด
-            const titleWithoutEmoji = category.replace(/\s*[\uD800-\uDBFF\uDC00-\uDFFF\u2700-\u27BF\u2300-\u23FF\u2B00-\u2BFF\u2E80-\u33FF]\s*/g, '').trim();
+            const theme = themeData[category];
 
-            lessonTitle.textContent = titleWithoutEmoji; 
+            // 1. กำหนดธีมสีของ Vocab Card
+            vocabCard.style.backgroundColor = theme.cardPrimary;
+            vocabCard.style.borderColor = theme.cardAccent;
+            englishWord.style.color = theme.cardAccent;
+
+            // 2. กำหนดชื่อบทเรียน
+            lessonTitle.textContent = category; 
+            
             currentIndex = 0;
             displayVocab();
             categoryPage.style.display = 'none';
